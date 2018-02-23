@@ -9,6 +9,10 @@ loadEventListeners();
 
 function loadEventListeners() {
 	form.addEventListener('submit', addTask);
+	//removing with deligation
+	taskList.addEventListener('click', removeTask);
+
+	clearButton.addEventListener('click', clearAll);
 }
 
 function addTask(e) {
@@ -37,4 +41,20 @@ function addTask(e) {
 		taskInput.value = '';
 		
 		e.preventDefault();
+}
+
+// removing task 
+function removeTask(e) {
+	if(e.target.parentElement.classList.contains('delete-item')){
+		if(confirm('Are you sure?')){
+			e.target.parentElement.parentElement.remove();
+		}
+	}
+}
+
+//Clear ALL 
+function clearAll() {
+	while(taskList.firstChild) {
+		taskList.removeChild(taskList.firstChild);
+	}
 }
