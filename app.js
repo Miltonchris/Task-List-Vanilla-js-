@@ -1,26 +1,40 @@
-// localStorage.setItem('name', 'Jess');
-// localStorage.setItem('age', '19');
+// Vars 
+const form = document.querySelector('#task-form');
+const taskList = document.querySelector('.collection');
+const clearButton = document.querySelector('.clear-tasks');
+const filter = document.querySelector('#filter');
+const taskInput = document.querySelector('#task');
 
+loadEventListeners();
 
-//set session
-// sessionStorage.setItem('name', 'Jess');
+function loadEventListeners() {
+	form.addEventListener('submit', addTask);
+}
 
-//remove from local
-// localStorage.removeItem('name');
+function addTask(e) {
+	if(taskInput.value === ''){
+		alert('Please add your task');
+}
+		// create item 
+		const li = document.createElement('li');
+		li.className = 'collection-item';
+		//append text node to the li 
+		li.appendChild(document.createTextNode(taskInput.value));
 
-// get from storage with a variable 
-const name = localStorage.getItem('name');
-const age = localStorage.getItem('age');
+		const link = document.createElement('a');
+		link.className = 'delete-item secondary-content';
 
-// // clear loca storage
-// localStorage.clear();
+		//remove icon on the link
+		link.innerHTML = '<i class ="fa fa-remove"></i>';
+		//appen link to the li 
+		li.appendChild(link);
 
-// console.log(`Name: ${name}`, `Age: ${age}`);
+		//append child to the list 
 
-document.querySelector('form').addEventListener('submit', function(e){
-  const task = document.getElementById('task').value;
+		taskList.appendChild(li);
 
-  localStorage.setItem('task', task);
-  e.preventDefault();
-  alert('Task saved');
-});
+		//clear input 
+		taskInput.value = '';
+		
+		e.preventDefault();
+}
