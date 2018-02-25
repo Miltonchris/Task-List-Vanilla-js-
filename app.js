@@ -13,6 +13,9 @@ function loadEventListeners() {
 	taskList.addEventListener('click', removeTask);
 
 	clearButton.addEventListener('click', clearAll);
+
+	//Filter through tasks 
+	filter.addEventListener('keyup', filterTasks);
 }
 
 function addTask(e) {
@@ -37,10 +40,25 @@ function addTask(e) {
 
 		taskList.appendChild(li);
 
-		//clear input 
+		//save to local storage 
+		storeTasksLocal(taskInput.value);
+
 		taskInput.value = '';
 		
 		e.preventDefault();
+}
+
+function storeTasksLocal(task){
+	let tasks;
+
+	if(localStorage.getItem('tasks') === null){
+		tasks = [];
+	}else {
+		tasks = JSON.parse(localStorage.getItem('tasks'));
+	}
+	tasks.push(task);
+
+	localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // removing task 
@@ -57,4 +75,18 @@ function clearAll() {
 	while(taskList.firstChild) {
 		taskList.removeChild(taskList.firstChild);
 	}
+}
+
+// filter
+function filterTasks(e) {
+	const text = e.target.value.toLowerCase();
+
+	document.querySelectorAll('.collection-item').forEach(function (task){
+		const item = task.firstChild.textContent;
+		if (item.toLowerCase().indexOf(text) != -1) {
+			task.style.display = 'block';
+		}else{
+			task.style.display = 'none';
+		}
+	});
 }
