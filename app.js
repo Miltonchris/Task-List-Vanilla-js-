@@ -128,7 +128,7 @@ function removeTaskFromLocalStorage(taskItem) {
 
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
-
+s
 // Clear Tasks
 function clearTasks() {
 
